@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 75vh;
+    background-color: #3b82f6;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.cell {
+    border: 5px solid black;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    font-size: 100px;
+}
+
+.board-container {
+    display: grid;
+    grid-template-columns: repeat(3, min-content);
+    border: 5px solid black;
+}
+

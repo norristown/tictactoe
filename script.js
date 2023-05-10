@@ -27,9 +27,6 @@ function ticTacToeGame() {
     let turn = true
     let winner = false;
     let counter = 0;
-    let player1Score = 0;
-    let player2Score = 0;
-
 
     function handleClick(e) {
         if (turn && !winner) {
@@ -94,3 +91,6 @@ function ticTacToeGame() {
         })
     }
 }
+
+let player1Score = 0;
+let player2Score = 0;

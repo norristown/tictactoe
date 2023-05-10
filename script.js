@@ -1,11 +1,21 @@
+const getCells = document.querySelectorAll('.cell');
+const textInfo = document.querySelectorAll('.info-right > div')
 ticTacToeGame();
 
 function resetGame() {
-
+    
     const resetBtn = document.querySelector('button')
     resetBtn.addEventListener('click', () => {
-        console.log('reset')
-    })
+        getCells.forEach(cell => {
+            cell.innerText = ''
+            cell.className = 'cell'
+        })
+        textInfo.forEach(div => {
+            div.className = '';
+            div.className = 'hidden'
+        })
+        ticTacToeGame();
+    } )
 }
 
 resetGame();
@@ -13,7 +23,7 @@ resetGame();
 
 function ticTacToeGame() {
 
-    const getCells = document.querySelectorAll('.cell');
+    
     getCells.forEach(cell => cell.addEventListener('click', handleClick))
     let turn = true
     let winner = false;
@@ -34,6 +44,8 @@ function ticTacToeGame() {
         counter++;
         if (counter === 9) {
             console.log('draw')
+            const draw = document.querySelector('#draw')
+            draw.classList.remove('hidden')
         }
     }
 
@@ -68,7 +80,7 @@ function ticTacToeGame() {
                 console.log(`${pos0InnerText} wins`)
                 
                 array.forEach(index => positions[index].className += ' winner');
-                const winText = document.querySelector(`.${pos0InnerText}`)
+                const winText = document.querySelector(`#${pos0InnerText}`)
                 winText.classList.remove('hidden')
             }
         })

@@ -42,7 +42,7 @@ function ticTacToeGame() {
         e.target.removeEventListener('click', handleClick)
         checkForWinner()
         counter++;
-        if (counter === 9 && winner) {
+        if (counter === 9 && winner === false) {
             
             const draw = document.querySelector('#draw')
             draw.classList.remove('hidden')

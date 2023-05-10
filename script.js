@@ -42,11 +42,12 @@ function ticTacToeGame() {
         e.target.removeEventListener('click', handleClick)
         checkForWinner()
         counter++;
-        if (counter === 9) {
-            console.log('draw')
+        if (counter === 9 && winner) {
+            
             const draw = document.querySelector('#draw')
             draw.classList.remove('hidden')
         }
+        
     }
 
     function switchTurn() {
@@ -77,8 +78,6 @@ function ticTacToeGame() {
                 pos1InnerText == pos2InnerText
             if (win) {
                 winner = true;
-                console.log(`${pos0InnerText} wins`)
-                
                 array.forEach(index => positions[index].className += ' winner');
                 const winText = document.querySelector(`#${pos0InnerText}`)
                 winText.classList.remove('hidden')

@@ -29,6 +29,8 @@ body {
 
 .info-right {
     font-size: 50px;
+    display: flex;
+    justify-content: center;
 }
 
 .container {
@@ -38,3 +40,45 @@ body {
 .hidden {
     display: none;
 }
+
+.info-right > div {
+    padding-top: 32px;
+    
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    flex: 1;
+}
+
+.reset {
+    border-radius: 3px;
+    border: 0;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 20px;
+    background: #d946ef;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+  }
+  
+  .reset:hover {
+    background: #e879f9;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .scoreBoard {
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    justify-content: space-between;
+  }
+
+  .num {
+    color: #e2e8f0;
+  }

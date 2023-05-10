@@ -4,7 +4,7 @@ ticTacToeGame();
 
 function resetGame() {
     
-    const resetBtn = document.querySelector('button')
+    const resetBtn = document.querySelector('.reset')
     resetBtn.addEventListener('click', () => {
         getCells.forEach(cell => {
             cell.innerText = ''
@@ -20,7 +20,6 @@ function resetGame() {
 
 resetGame();
 
-
 function ticTacToeGame() {
 
     
@@ -28,6 +27,9 @@ function ticTacToeGame() {
     let turn = true
     let winner = false;
     let counter = 0;
+    let player1Score = 0;
+    let player2Score = 0;
+
 
     function handleClick(e) {
         if (turn && !winner) {
@@ -81,6 +83,13 @@ function ticTacToeGame() {
                 array.forEach(index => positions[index].className += ' winner');
                 const winText = document.querySelector(`#${pos0InnerText}`)
                 winText.classList.remove('hidden')
+                if (pos0InnerText === 'X') {
+                    player1Score++;
+                    document.querySelector('.scoreP1 > .num').innerText = player1Score
+                } else if (pos0InnerText === 'O') {
+                    player2Score++;
+                    document.querySelector('.scoreP2 > .num').innerText = player2Score
+                }
             }
         })
     }

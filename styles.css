@@ -1,11 +1,9 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 75vh;
     background-color: #3b82f6;
     font-family: Arial, Helvetica, sans-serif;
+    gap: 2rem;
 }
 
 .cell {
@@ -27,4 +25,16 @@ body {
 
 .winner {
     color: white;
+}
+
+.info-right {
+    font-size: 50px;
+}
+
+.container {
+    display: grid;
+}
+
+.hidden {
+    display: none;
 }

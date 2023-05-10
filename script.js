@@ -1,91 +1,76 @@
-const ticTacToeGame = new TicTacToeGame();
-ticTacToeGame.start();
+ticTacToeGame();
 
-function TicTacToeGame() {
-    const board = new Board();
-    const humanPlayer = new HumanPlayer(board);
-    const computerPlayer = new ComputerPlayer(board);
-    let turn = 0;
+function resetGame() {
 
-    this.start = function() {
-        const config = { childList: true };
-        const observer = new MutationObserver(() => takeTurn());
-        board.positions.forEach((el) => observer.observe(el, config));
-        takeTurn();
-    }
-
-    function takeTurn() {
-
-        if(board.checkForWinner()) {return}
-
-        if(turn % 2 === 0) {
-            humanPlayer.takeTurn();
-        } else {
-            computerPlayer.takeTurn();
-        }
-        turn++;
-    }
+    const resetBtn = document.querySelector('button')
+    resetBtn.addEventListener('click', () => {
+        console.log('reset')
+    })
 }
 
-function Board() {
-    
-    this.positions = Array.from(document.querySelectorAll('.cell'))
+resetGame();
 
-    this.checkForWinner = function() {
-        let winner = false;
-        const winningCombinations = [
+
+function ticTacToeGame() {
+
+    const getCells = document.querySelectorAll('.cell');
+    getCells.forEach(cell => cell.addEventListener('click', handleClick))
+    let turn = true
+    let winner = false;
+    let counter = 0;
+
+    function handleClick(e) {
+        if (turn && !winner) {
+            e.target.innerText = 'X'
+            switchTurn();
+        } else if (!turn && !winner) {
+            e.target.innerText = 'O'
+            switchTurn();
+        } else {
+            return
+        }
+        e.target.removeEventListener('click', handleClick)
+        checkForWinner()
+        counter++;
+        if (counter === 9) {
+            console.log('draw')
+        }
+    }
+
+    function switchTurn() {
+        turn = !turn;
+    }
+
+    function checkForWinner() {
+
+        const winningCombos = [
             [0, 1, 2],
             [3, 4, 5],
             [6, 7, 8],
-            [0, 4, 8],
-            [2, 4, 6],
             [0, 3, 6],
             [1, 4, 7],
-            [2, 5, 8]
-        ];
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ]
 
-        const positions = this.positions;
-
-        winningCombinations.forEach((winningCombo) => {
-            const pos0InnerText = positions[winningCombo[0]].innerText;
-            const pos1InnerText = positions[winningCombo[1]].innerText;
-            const pos2InnerText = positions[winningCombo[2]].innerText;
-            const isWinningCombo = pos0InnerText !== '' &&
-                pos0InnerText === pos1InnerText &&
-                pos1InnerText === pos2InnerText;
-
-            if(isWinningCombo) {
+        const positions = Array.from(getCells)
+        winningCombos.forEach(array => {
+            const pos0InnerText = positions[array[0]].innerText
+            const pos1InnerText = positions[array[1]].innerText
+            const pos2InnerText = positions[array[2]].innerText
+            const win =
+                pos0InnerText !== '' &&
+                pos0InnerText == pos1InnerText &&
+                pos1InnerText == pos2InnerText
+            if (win) {
                 winner = true;
-                winningCombo.forEach((index) => {
-                    positions[index].className += ' winner'
-                })
-    
-
+                console.log(`${pos0InnerText} wins`)
+                
+                array.forEach(index => positions[index].className += ' winner');
+                const winText = document.querySelector(`.${pos0InnerText}`)
+                winText.classList.remove('hidden')
             }
-            
         })
-        return winner;
-    }
-}
-
-function HumanPlayer(board) {
-
-    this.takeTurn = function() {
-        
-        board.positions.forEach(el => el.addEventListener('click', handleTurnTaken) )
-    }
-
-    function handleTurnTaken(e) {
-        e.target.innerText = 'X';
-        board.positions.forEach(el => el.removeEventListener('click', handleTurnTaken))
-    }
-}
-
-function ComputerPlayer(board) {
-
-    this.takeTurn = function() {
-        const availablePostions = board.positions.filter((p) => p.innerText === '');
-        const move = Math.floor(Math.random() * availablePostions.length)
-        availablePostions[move].innerText = 'O';
     }
 }

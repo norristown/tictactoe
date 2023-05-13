@@ -11,14 +11,32 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="ask">
+        <button class="single">Single Player</button>
+        <button class="multi">Multiplayer</button>
+        <div class="tictactoe">
+            <div class="tic">TIC</div>
+            <div class="tac">TAC</div>
+            <div class="toe">TOE</div>
+        </div>
+    </div>
+    <div class="names hidden">
+        <h1>Enter player names</h1>
+        <label for="p1Name" class="p1Name">Player One: </label>
+        <input type="text" id="p1Name"><br>
+        <label for="p2Name" class="p2Name">Player Two: </label>
+        <input type="text" id="p2Name"><br>
+        <button class="submit">Submit</button>
+    </div>
+    <div class="container hidden">
+
         <div class="header">
             <h1>Tic Tac Toe</h1>
             <button class="reset">Reset Game</button>
         </div>
-         <div class="scoreBoard">
-                <div class="scoreP1">Player One Score: <span class="num">0</span></div>
-                <div class="scoreP2">Player Two Score: <span class="num">0</span></div>
+        <div class="scoreBoard">
+            <div class="scoreP1"></div>
+            <div class="scoreP2"><span class="num">0</span></div>
         </div>
         <div class="board-container">
             <div class="cell" id="0"></div>
@@ -32,10 +50,10 @@
             <div class="cell" id="8"></div>
         </div>
         <div class="info-right">
-            <div class="hidden" id="X">Player One Wins</div>
-            <div class="hidden" id="O">Player Two Wins</div>
+            <div class="hidden" id="X"></div>
+            <div class="hidden" id="O"></div>
             <div class="hidden" id="draw">Draw</div>
-            
+
         </div>
     </div>
 

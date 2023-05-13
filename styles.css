@@ -3,13 +3,13 @@ body {
     justify-content: center;
     background-color: #3b82f6;
     font-family: Arial, Helvetica, sans-serif;
-    gap: 2rem;
+    margin-top: 100px;
 }
 
 .cell {
     border: 5px solid black;
-    height: 150px;
-    width: 150px;
+    height: 165px;
+    width: 165px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +55,7 @@ h1 {
     flex: 1;
 }
 
-.reset {
+button {
     border-radius: 3px;
     border: 0;
     font-family: Arial;
@@ -66,7 +66,7 @@ h1 {
     text-decoration: none;
   }
   
-  .reset:hover {
+  button:hover {
     background: #e879f9;
     text-decoration: none;
     cursor: pointer;
@@ -82,3 +82,39 @@ h1 {
   .num {
     color: #e2e8f0;
   }
+
+  .multi {
+    float: right;
+  }
+
+  label {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 5px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+input:focus {
+    outline: none;
+    border: 2px solid #59a1ff;
+    box-shadow: 0px 15px 10px -15px #111;
+}
+
+.tictactoe {
+    display: flex;
+    font-weight: 800;
+    font-size: 14rem;
+}
+
+.submit {
+    width: 100%;
+}

@@ -1,9 +1,44 @@
 const getCells = document.querySelectorAll('.cell');
 const textInfo = document.querySelectorAll('.info-right > div')
-ticTacToeGame();
+const names = document.querySelector('.names');
+
+
+function pickGame() {
+
+    const single = document.querySelector('.single');
+    const multi = document.querySelector('.multi');
+    const ask = document.querySelector('.ask')
+    single.addEventListener('click', ticTacToeGame)
+    multi.addEventListener('click', () => {
+        ask.classList += ' hidden';
+        names.classList.remove('hidden');
+    });
+}
+pickGame();
+
+function getNames() {
+    const container = document.querySelector('.container')
+    const p1Input = document.querySelector('#p1Name');
+    const p2Input = document.querySelector('#p2Name');
+    const p1Win = document.querySelector('#X');
+    const p2Win = document.querySelector('#O');
+    const scoreP1 = document.querySelector('.scoreP1');
+    const scoreP2 = document.querySelector('.scoreP2');
+    const submit = document.querySelector('.submit');
+    submit.addEventListener('click', () => {
+        p1Win.textContent = `${p1Input.value} Wins`
+        p2Win.textContent = `${p2Input.value} Wins`
+        scoreP1.innerHTML = `${p1Input.value}'s Score: <span class="num">0</span>`
+        scoreP2.innerHTML = `${p2Input.value}'s Score: <span class="num">0</span>`
+        names.classList += ' hidden'
+        container.classList.remove('hidden');
+        ticTacToeGame();
+    })
+}
+getNames();
 
 function resetGame() {
-    
+
     const resetBtn = document.querySelector('.reset')
     resetBtn.addEventListener('click', () => {
         getCells.forEach(cell => {
@@ -15,14 +50,13 @@ function resetGame() {
             div.className = 'hidden'
         })
         ticTacToeGame();
-    } )
+    })
 }
 
 resetGame();
 
 function ticTacToeGame() {
 
-    
     getCells.forEach(cell => cell.addEventListener('click', handleClick))
     let turn = true
     let winner = false;
@@ -42,11 +76,11 @@ function ticTacToeGame() {
         checkForWinner()
         counter++;
         if (counter === 9 && winner === false) {
-            
+
             const draw = document.querySelector('#draw')
             draw.classList.remove('hidden')
         }
-        
+
     }
 
     function switchTurn() {

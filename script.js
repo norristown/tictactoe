@@ -26,10 +26,29 @@ function getNames() {
     const scoreP2 = document.querySelector('.scoreP2');
     const submit = document.querySelector('.submit');
     submit.addEventListener('click', () => {
-        p1Win.textContent = `${p1Input.value} Wins`
-        p2Win.textContent = `${p2Input.value} Wins`
-        scoreP1.innerHTML = `${p1Input.value}'s Score: <span class="num">0</span>`
-        scoreP2.innerHTML = `${p2Input.value}'s Score: <span class="num">0</span>`
+
+        if (p1Input.value === '' && p2Input.value === '') {
+            p1Win.textContent = 'Player One Wins';
+            scoreP1.innerHTML = `Player One's Score: <span class="num">0</span>`;
+            p2Win.textContent = 'Player Two Wins';
+            scoreP2.innerHTML = `Player Two's Score: <span class="num">0</span>`;
+        } else if (p1Input.value !== '' && p2Input.value === '') {
+            p1Win.textContent = `${p1Input.value} Wins`;
+            scoreP1.innerHTML = `${p1Input.value}'s Score: <span class="num">0</span>`;
+            p2Win.textContent = 'Player Two Wins';
+            scoreP2.innerHTML = `Player Two's Score: <span class="num">0</span>`;
+        } else if (p1Input.value === '' && p2Input.value !== '') {
+            p1Win.textContent = 'Player One Wins';
+            scoreP1.innerHTML = `Player One's Score: <span class="num">0</span>`;
+            p2Win.textContent = `${p2Input.value} Wins`;
+            scoreP2.innerHTML = `${p2Input.value}'s Score: <span class="num">0</span>`;
+        } else {
+            p1Win.textContent = `${p1Input.value} Wins`;
+            scoreP1.innerHTML = `${p1Input.value}'s Score: <span class="num">0</span>`;
+            p2Win.textContent = `${p2Input.value} Wins`;
+            scoreP2.innerHTML = `${p2Input.value}'s Score: <span class="num">0</span>`;
+        }
+
         names.classList += ' hidden'
         container.classList.remove('hidden');
         ticTacToeGame();

@@ -37,10 +37,6 @@ body {
     display: grid;
 }
 
-.hidden {
-    display: none;
-}
-
 .info-right > div {
     padding-top: 32px;
     
@@ -114,7 +110,11 @@ input:focus {
     font-weight: 800;
     font-size: 14rem;
 }
+.names {
+  display: flex;
+  flex-direction: column;
+}
 
-.submit {
-    width: 100%;
+.hidden {
+  display: none;
 }

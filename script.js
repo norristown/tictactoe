@@ -1,23 +1,31 @@
 const getCells = document.querySelectorAll('.cell');
 const textInfo = document.querySelectorAll('.info-right > div')
 const names = document.querySelector('.names');
-
+const container = document.querySelector('.container')
+let singlePlayer = false;
+let twoPlayer = false;
 
 function pickGame() {
 
     const single = document.querySelector('.single');
     const multi = document.querySelector('.multi');
     const ask = document.querySelector('.ask')
-    single.addEventListener('click', ticTacToeGame)
+    single.addEventListener('click', () => {
+        singlePlayer = true;
+        ask.classList += ' hidden';
+        container.classList.remove('hidden');
+        ticTacToeGame();
+    })
     multi.addEventListener('click', () => {
         ask.classList += ' hidden';
         names.classList.remove('hidden');
+        twoPlayer = true;
     });
 }
 pickGame();
 
 function getNames() {
-    const container = document.querySelector('.container')
+
     const p1Input = document.querySelector('#p1Name');
     const p2Input = document.querySelector('#p2Name');
     const p1Win = document.querySelector('#X');
@@ -68,39 +76,62 @@ function resetGame() {
             div.className = '';
             div.className = 'hidden'
         })
+        
+        counter = 0;
         ticTacToeGame();
     })
 }
 
 resetGame();
-
+let counter = 0;
 function ticTacToeGame() {
 
     getCells.forEach(cell => cell.addEventListener('click', handleClick))
     let turn = true
     let winner = false;
-    let counter = 0;
+    
 
+    //Two Player mode
     function handleClick(e) {
-        if (turn && !winner) {
-            e.target.innerText = 'X'
-            switchTurn();
-        } else if (!turn && !winner) {
-            e.target.innerText = 'O'
-            switchTurn();
-        } else {
-            return
-        }
-        e.target.removeEventListener('click', handleClick)
-        checkForWinner()
-        counter++;
-        if (counter === 9 && winner === false) {
 
-            const draw = document.querySelector('#draw')
-            draw.classList.remove('hidden')
+        if (twoPlayer === true) {
+            if (turn && !winner) {
+                e.target.innerText = 'X'
+                switchTurn();
+            } else if (!turn && !winner) {
+                e.target.innerText = 'O'
+                switchTurn();
+            } else {
+                return
+            }
+            e.target.removeEventListener('click', handleClick)
+            checkForWinner()
+            counter++;
+            if (counter === 9 && winner === false) {
+                const draw = document.querySelector('#draw')
+                draw.classList.remove('hidden')
+            }
+        } 
+        //Single Player
+        else {
+            if (!winner) {
+                e.target.innerText = 'X'
+                switchTurn();
+                checkForWinner();
+                computerMove();
+                
+            } else {
+                return
+            }
+            counter++;
+            console.log(counter)
+            checkForWinner();
+            if (counter === 9 && getCells.innerHTML !== "") {
+                const draw = document.querySelector('#draw')
+                draw.classList.remove('hidden')}
         }
-
     }
+
 
     function switchTurn() {
         turn = !turn;
@@ -119,7 +150,7 @@ function ticTacToeGame() {
             [2, 4, 6]
         ]
 
-        const positions = Array.from(getCells)
+        
         winningCombos.forEach(array => {
             const pos0InnerText = positions[array[0]].innerText
             const pos1InnerText = positions[array[1]].innerText
@@ -143,6 +174,15 @@ function ticTacToeGame() {
             }
         })
     }
+}
+const positions = Array.from(getCells)
+function computerMove() {
+    
+    console.log('computer move')
+    const availablePositions = positions.filter(cell => cell.innerText === '')
+    const move = Math.floor(Math.random() * availablePositions.length)
+    availablePositions[move].innerText = 'O'
+    counter++;
 }
 
 let player1Score = 0;

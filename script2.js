@@ -78,7 +78,31 @@ class TicTacToe {
 
     playVsComputer () {
         console.log('playing against computer')
+        cells.forEach(cell => cell.addEventListener('click', (e) => {
+            if (e.target.innerText === 'X' || e.target.innerText === 'O') {
+                return
+            } else {
+                if (!winner) {
+                    e.target.innerText = this.player1.marker
+                    this.player1.turn = false
+                    counter++;
+                    this.checkForWinner()
+                    this.computerMove()
+                    this.checkForWinner()
+                } else { 
+                    return
+                } 
+            }
+        }))
+    }
 
+    computerMove() {
+        const positions = Array.from(cells)
+        console.log('computer move')
+        const availablePositions = positions.filter(cell => cell.innerText === '')
+        const move = Math.floor(Math.random() * availablePositions.length)
+        availablePositions[move].innerText = 'O'
+        counter++;
     }
 
     checkForWinner () {
@@ -111,9 +135,18 @@ class TicTacToe {
                 array.forEach(index => positions[index].className += ' winner');
                 
                 if (pos0InnerText === 'X') {
-                    winText.textContent = `${this.player1.name} Wins`
+                    if (this.playVsPlayer()) {
+                        winText.textContent = `${this.player1.name} Wins`
+                    } else {
+                        winText.textContent = `You Win :)`
+                    }
                 } else {
-                    winText.textContent = `${this.player2.name} Wins`
+                    if (this.playVsPlayer()) {
+                        winText.textContent = `${this.player2.name} Wins`
+                    } else {
+                        winText.textContent = 'You Lose :('
+                    }
+                    
                 }
                 
                 winText.classList.remove('hidden')
@@ -157,7 +190,6 @@ class Board {
     }
 
     playerVsComputer () {
-        this.positions = Array.from(cells)
         this.game.playVsComputer();
         console.log('playing vs computer')
         this.game.reset();

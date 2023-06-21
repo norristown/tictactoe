@@ -3,7 +3,7 @@ const textInfo = document.querySelectorAll('.info-right > div')
 const names = document.querySelector('.names');
 const container = document.querySelector('.container')
 let winner = false;
-
+let counter = 0;
 class TicTacToe {
 
     constructor(a, b) {
@@ -29,7 +29,6 @@ class TicTacToe {
         singleSelect.addEventListener('click', () => {
             ask.classList += ' hidden';
             container.classList.remove('hidden');
-            console.log('single player')
             board.playerVsComputer()
         })
 
@@ -37,7 +36,6 @@ class TicTacToe {
         twoSelect.addEventListener('click', () => {
             ask.classList += ' hidden';
             names.classList.remove('hidden');
-            console.log('two player')
             board.playerVsPlayer()
         })
     }
@@ -51,33 +49,42 @@ class TicTacToe {
             this.player2.name = p2Input.value !== '' ? p2Input.value : 'Player Two'
             container.classList.remove('hidden');
             names.classList += ' hidden'
-            console.log(this.player1.name, this.player2.name)
         })
     }
 
-    play() {
-        cells.forEach(cell => cell.addEventListener('click', (e) => { 
-            if (this.player1.turn && !winner) {
-                e.target.innerText = this.player1.marker
-                this.player1.turn = false
-                this.checkForWinner()
-            } else if (!this.player2.turn && !winner) {
-                e.target.innerText = this.player2.marker
-                this.player1.turn = true;
-                this.checkForWinner()
-            } else { return }
-        
+    playVsPlayer() {
+        cells.forEach(cell => cell.addEventListener('click', (e) => {
+            if (e.target.innerText === 'X' || e.target.innerText === 'O') {
+                return
+            } else {
+                if (this.player1.turn && !winner) {
+                    e.target.innerText = this.player1.marker
+                    this.player1.turn = false
+                    counter++;
+                    this.checkForWinner()
+                } else if (!this.player2.turn && !winner) {
+                    e.target.innerText = this.player2.marker
+                    this.player1.turn = true;
+                    counter++
+                    this.checkForWinner()
+                } else { 
+                    return
+                } 
+            }
         }))
     }
 
+    
+
     playVsComputer () {
-        
+        console.log('playing against computer')
+
     }
 
     checkForWinner () {
 
-        let player1Score = 0;
-        let player2Score = 0;
+        // let player1Score = 0;
+        // let player2Score = 0;
         const positions = Array.from(cells)
         const winningCombos = [
             [0, 1, 2],
@@ -91,6 +98,7 @@ class TicTacToe {
         ]
 
         winningCombos.forEach(array => {
+            const winText = document.querySelector('#outcome')
             const pos0InnerText = positions[array[0]].innerText
             const pos1InnerText = positions[array[1]].innerText
             const pos2InnerText = positions[array[2]].innerText
@@ -101,7 +109,7 @@ class TicTacToe {
             if (win) {
                 winner = true;
                 array.forEach(index => positions[index].className += ' winner');
-                const winText = document.querySelector('#outcome')
+                
                 if (pos0InnerText === 'X') {
                     winText.textContent = `${this.player1.name} Wins`
                 } else {
@@ -116,10 +124,28 @@ class TicTacToe {
                 //     player2Score++;
                 //     document.querySelector('.scoreP2 > .num').innerText = player2Score
                 // }
+            } else if (!winner && counter === 9) {
+                console.log('draw')
+                winText.textContent = 'Draw'
+                winText.classList.remove('hidden')
             }
         })
     }
 
+    reset () {
+        const resetBtn = document.querySelector('.reset')
+        resetBtn.addEventListener('click', () => {
+            cells.forEach(cell => {
+                cell.innerText = ''
+                cell.className = 'cell'
+            })
+        const outcome = document.querySelector('#outcome');
+        outcome.className = '';
+        outcome.className = 'hidden'
+        outcome.textContent = ''
+        winner = false;
+        })
+    }
 
 }
 
@@ -134,13 +160,17 @@ class Board {
         this.positions = Array.from(cells)
         this.game.playVsComputer();
         console.log('playing vs computer')
+        this.game.reset();
     }
 
     playerVsPlayer () {
         this.game.names();
-        this.game.play()
+        this.game.playVsPlayer()
         console.log('player vs player')
+        this.game.reset();
     }
+
+
 }
 
 const game = new TicTacToe()

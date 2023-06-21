@@ -125,7 +125,6 @@ class TicTacToe {
                 //     document.querySelector('.scoreP2 > .num').innerText = player2Score
                 // }
             } else if (!winner && counter === 9) {
-                console.log('draw')
                 winText.textContent = 'Draw'
                 winText.classList.remove('hidden')
             }
@@ -144,6 +143,7 @@ class TicTacToe {
         outcome.className = 'hidden'
         outcome.textContent = ''
         winner = false;
+        counter = 0;
         })
     }
 

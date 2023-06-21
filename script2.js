@@ -4,6 +4,8 @@ const names = document.querySelector('.names');
 const container = document.querySelector('.container')
 let winner = false;
 let counter = 0;
+let pve = false;
+let pvp = false;
 class TicTacToe {
 
     constructor(a, b) {
@@ -53,6 +55,7 @@ class TicTacToe {
     }
 
     playVsPlayer() {
+        pvp = true;
         cells.forEach(cell => cell.addEventListener('click', (e) => {
             if (e.target.innerText === 'X' || e.target.innerText === 'O') {
                 return
@@ -74,10 +77,8 @@ class TicTacToe {
         }))
     }
 
-    
-
     playVsComputer () {
-        console.log('playing against computer')
+        pve = true;
         cells.forEach(cell => cell.addEventListener('click', (e) => {
             if (e.target.innerText === 'X' || e.target.innerText === 'O') {
                 return
@@ -98,7 +99,6 @@ class TicTacToe {
 
     computerMove() {
         const positions = Array.from(cells)
-        console.log('computer move')
         const availablePositions = positions.filter(cell => cell.innerText === '')
         const move = Math.floor(Math.random() * availablePositions.length)
         availablePositions[move].innerText = 'O'
@@ -106,9 +106,6 @@ class TicTacToe {
     }
 
     checkForWinner () {
-
-        // let player1Score = 0;
-        // let player2Score = 0;
         const positions = Array.from(cells)
         const winningCombos = [
             [0, 1, 2],
@@ -133,30 +130,20 @@ class TicTacToe {
             if (win) {
                 winner = true;
                 array.forEach(index => positions[index].className += ' winner');
-                
                 if (pos0InnerText === 'X') {
-                    if (this.playVsPlayer()) {
+                    if (pvp) {
                         winText.textContent = `${this.player1.name} Wins`
                     } else {
                         winText.textContent = `You Win :)`
                     }
                 } else {
-                    if (this.playVsPlayer()) {
+                    if (pvp) {
                         winText.textContent = `${this.player2.name} Wins`
                     } else {
                         winText.textContent = 'You Lose :('
                     }
-                    
                 }
-                
                 winText.classList.remove('hidden')
-                // if (pos0InnerText === 'X') {
-                //     player1Score++;
-                //     document.querySelector('.scoreP1 > .num').innerText = player1Score
-                // } else if (pos0InnerText === 'O') {
-                //     player2Score++;
-                //     document.querySelector('.scoreP2 > .num').innerText = player2Score
-                // }
             } else if (!winner && counter === 9) {
                 winText.textContent = 'Draw'
                 winText.classList.remove('hidden')
@@ -179,7 +166,6 @@ class TicTacToe {
         counter = 0;
         })
     }
-
 }
 
 class Board {
@@ -201,8 +187,6 @@ class Board {
         console.log('player vs player')
         this.game.reset();
     }
-
-
 }
 
 const game = new TicTacToe()
